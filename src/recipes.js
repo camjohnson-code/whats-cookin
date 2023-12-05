@@ -1,5 +1,14 @@
-//Here is an example demonstrating logic separated that can be imported into the scripts and test files. Feel free to update this later! 
-
-export const findRecipeIngredients = recipe => {
-  console.log(recipe)
+function filterByTag(recipes, tag) {
+  return recipes.filter((recipe) => recipe.tags.includes(tag));
 }
+
+function getRecipeByName(recipes, name) {
+  return recipes.find(
+    (recipe) => recipe.name.toLowerCase() === name.toLowerCase()
+  );
+}
+
+export {
+  filterByTag,
+  getRecipeByName
+};
