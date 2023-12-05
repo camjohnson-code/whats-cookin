@@ -3,10 +3,67 @@
   <head>
     <meta charset="UTF-8">
     <title>Whats Cookin</title>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Aleo:wght@100;200;300;400;500;600;700;800;900&family=Roboto:wght@100;300;400;500;700;900&display=swap');
+      </style>
+    <link rel="stylesheet" href="../src/styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Aleo:wght@100;200;300;400;500;600;700;800;900&family=Roboto:wght@100;300;400;500;700;900&display=swap" rel="stylesheet">
   </head>
   <body>
-    <h1>Whats Cookin</h1>
+    <header>
+      <span style="font-size:40px;cursor: pointer;color: #C28964;" onclick="showNav()">&#9776;</span>
+      <div class="topnav">
+        <h1 class="logo">Whats Cookin</h1>
+        <h2 class="tagline">Find and track recipes</h2>
+        <input type="text" placeholder="Search Recipes">
+      </div>
+    </header>
+    <div id="mainSidebar" class="sidenav">
+      <a href="javascript:void(0)" class="closebtn" onclick="hideNav()">&times;</a>
+      <a href="#">Thing 1</a>
+      <a href="#">Thing 2</a>
+    </div>
+    <main>
+      
+
+      <div class="tagbar">
+        <ul>
+          <li><button id="all" class="tag-button">ALL</button></li>
+          <li><button id="starter" class="tag-button">STARTER</button></li>
+          <li><button id="snack" class="tag-button">SNACK</button></li>
+          <li><button id="appetizer" class="tag-button">APPETIZER</button></li>
+          <li><button id="lunch" class="tag-button">LUNCH</button></li>
+          <li><button id="main course" class="tag-button">MAIN COURSE</button></li>
+          <li><button id="main dish" class="tag-button">MAIN DISH</button></li>
+          <li><button id="BREAKFAST" class="tag-button">BREAKFAST</button></li>
+          <li><button id="side dish" class="tag-button">SIDE DISH</button></li>
+          <li><button id="dinner" class="tag-button">DINNER</button></li>
+        </ul>
+      </div>
+      <div class="grid-container">
+        <div class="grid-item">1</div>
+        <div class="grid-item">2</div>
+        <div class="grid-item">3</div>
+        <div class="grid-item">4</div>
+        <div class="grid-item">5</div>
+        <div class="grid-item">6</div>
+        <div class="grid-item">7</div>
+        <div class="grid-item">8</div>
+      </div>
+    </main>
   </body>
   <!-- Do not include the scripts.js file here - it is done automatically by the webpack server -->
+
   <script src="bundle.js"></script>
+  <script>
+    function showNav() {
+      document.getElementById("mainSidebar").style.width = "250px";
+    }
+    function hideNav() {
+      document.getElementById("mainSidebar").style.width = "0";
+    }
+  </script>
+
 </html>

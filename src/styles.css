@@ -1,3 +1,142 @@
+:root {
+  --lightGray: lightgray;
+  --white: white;
+}
+
 body {
-  background-color: blueviolet;
+  background-color: var(--white);
+  margin: 0;
+}
+
+h1 {
+  font-family: 'Aleo', serif;
+  font-weight: 200;
+  font-size: 66px;
+}
+
+h2 {
+  font-family:'Roboto', sans-serif;
+  font-size: 24px;
+  font-weight: 100;
+  ;
+}
+
+header {
+  background-image: url('images/whats-cooking-banner.jpg');
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-size: 100%;
+  background-repeat: no-repeat;
+  height: 250px;
+ };
+
+ .tagline {
+  font-family: 'Roboto', sans-serif;
+  font-weight: 200;
+  justify-content: space-around;
+
+ }
+ 
+ .tagbar {
+  display: flex;
+  margin: 50px;
+ }
+
+ .tag-button {
+  background-color: #E7E5E6;
+  border: none;
+  color: #C28964;
+  font-family: 'Roboto', sans-serif;
+  font-size: 17px;
+  font-weight: 300;
+  margin: 10px;
+}
+ 
+ ul {
+  display: flex;
+  margin: auto;
+  justify-content: space-evenly;
+  list-style-type: none;
+  background-color: #E7E5E6;
+  border-radius: 25px;
+  color: var(--white);
+  height: 50px;
+ }
+
+ input {
+  position: fixed;
+  right: 0;
+  border: none;
+  border-radius: 25px;
+  padding: 10px 30px;
+  font-size: 20px;
+  font-family: 'Roboto', sans-serif;
+  font-weight: 300;
+  background-color: var(--lightGray);
+  margin-bottom: 1vh;
+  
+ }
+
+ .grid-container {
+  display: grid;
+  height: 50vh;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  row-gap: 50px;
+  column-gap: 50px;
+  justify-items: center;
+  align-items: center;
+ }
+
+ .grid-item {
+  height: 100px;
+  width: 100px;
+  border: red 1px solid;
+ }
+
+header span {
+  position: absolute;
+  top: 1vh;
+  left: 1vw;
+}
+
+.sidenav {
+  height: 100%;
+  width: 0;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  background-color: var(--lightGray);
+  overflow-x: hidden;
+  transition: 0.5s;
+  padding-top: 60px;
+}
+
+.sidenav a {
+  padding: 10px 10px 10px 40px;
+  text-decoration: none;
+  font-family: "Aleo", sans-serif;
+  font-size: 25px;
+  color: var(--white);
+  display: flex;
+  transition: 0.3s;
+}
+
+.sidenav a:hover {
+  color: aquamarine;
+}
+
+.sidenav .closebtn {
+  position: absolute;
+  top: 0;
+  right: 25px;
+  font-size:36px;
+  margin-left: 50px;
+}
+
+@media screen and (max-height: 450px) {
+  .sidenav {padding-top: 15px;}
+  .sidenav a {font-size: 18px;}
 }
