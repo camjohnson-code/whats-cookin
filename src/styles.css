@@ -82,7 +82,7 @@ header {
   display: grid;
   height: 50vh;
   grid-template-columns: 1fr 1fr 1fr 1fr;
-  grid-template-rows: 1fr 1fr;
+  /* grid-template-rows: 1fr 1fr; */
   row-gap: 50px;
   column-gap: 50px;
   justify-items: center;
@@ -93,6 +93,12 @@ header {
   height: 100px;
   width: 100px;
   border: red 1px solid;
+ }
+
+ .recipe-image {
+  height: 100px;
+  width: 100px;
+  border-radius: 50%;
  }
 
 header span {
