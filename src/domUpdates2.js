@@ -13,29 +13,40 @@ import {
 import recipeData  from "./data/recipes.js";
 
 // Queries
-var allTags = document.querySelectorAll('.tag-button');
-let displayedRecipesSection = document.querySelector('.grid-container')
+const tagBar = document.querySelector('.tagbar')
+const allTags = document.querySelectorAll('.tag-button');
+const displayedRecipesSection = document.querySelector('.grid-container');
+const searchInput = document.querySelector('.search-input');
+const topNav = document.querySelector('.topnav')
+const header = document.querySelector('header');
 
-// eventListener
-// var displayedRecipes = [];//on load, hold all recipe information in webpage
-// //when we filter by a tag, replace the contents with new filtered recipes
-
+// Event Listeners
 allTags.forEach(tag => {
   tag.addEventListener('click', returnListByTag)
 })
+searchInput.addEventListener('keypress', returnSearchedRecipe)
+window.addEventListener('load', generateRecipes(recipeData))
+
+function returnSearchedRecipe(event) {
+  if (event.key === 'Enter') {
+    const searchText = event.target.value
+    const result = (getRecipeByName(recipeData, searchText))
+
+    if (result) {
+      generateRecipes(result)
+    }
+  }
+}
 
 function returnListByTag(event){
   const buttonID = event.target.id;
-  console.log(buttonID);
 
   if (buttonID === 'all'){
     const filteredRecipes = recipeData
     generateRecipes(filteredRecipes)
-    console.log(filteredRecipes);
   } else {
     const filteredRecipes =  filterByTag(recipeData, buttonID);
     generateRecipes(filteredRecipes)
-    console.log(filteredRecipes);
   }
 }
 
@@ -50,30 +61,19 @@ function generateRecipes(recipes) {
     </div>
     `
   })
-
 }
 
-// function displayRecipes() {
-//   recipeData.forEach((recipe) => {
-//     let recipeBlock = document.createElement('div');
-
-//     recipeBlock.innerHTML = `
-//       <img src="${recipe.image}" alt="Recipe Photo">
-//       <p>${recipe.name}</p>
-//     `;
-
-//     recipeBlock.classList.add('grid-item');
-//     recipesSection.appendChild(recipeBlock);
-//   });
-// }
-
-function testFunction () {
-  console.log("test")
+function hide(element) {
+  element.classList.add('hidden')
 }
 
-
+function show(element) {
+  element.classList.remove('hidden')
+}
 
 export {
     returnListByTag,
-    testFunction,
+    returnSearchedRecipe,
+    hide,
+    show
 }

@@ -7,9 +7,12 @@ import './images/turing-logo.png';
 import ingredientsData from './data/ingredients';
 // Below are examples of how you can import functions from either the recipes or domUpdates files.
 // import { findRecipeIngredients  } from './recipes';
+
 import {
   returnSearchedRecipe,
   returnListByTag,
   generateRecipes
 } from './domUpdates';
 
+import { displayRecipes } from './domUpdates'
+import { returnListByTag, returnSearchedRecipe } from './domUpdates2';
