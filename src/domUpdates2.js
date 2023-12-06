@@ -24,26 +24,16 @@ const header = document.querySelector('header');
 allTags.forEach(tag => {
   tag.addEventListener('click', returnListByTag)
 })
-
 searchInput.addEventListener('keypress', returnSearchedRecipe)
+window.addEventListener('load', generateRecipes(recipeData))
 
 function returnSearchedRecipe(event) {
   if (event.key === 'Enter') {
     const searchText = event.target.value
-    console.log(searchText);
-
     const result = (getRecipeByName(recipeData, searchText))
-    console.log(result);
 
     if (result) {
-      hide(tagBar)
-      displayedRecipesSection.innerHTML = ""
-      header.style.backgroundImage = 'none';
-      header.style.backgroundColor = '#e7e5e6'
-      header.style.height = '70px';
-      topNav.classList.add('hidden');
-      tagBar.classList.add('hidden');
-      displayedRecipesSection.classList.add('hidden');
+      generateRecipes(result)
     }
   }
 }

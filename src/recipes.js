@@ -4,7 +4,7 @@ function filterByTag(recipes, tag) {
 
 function getRecipeByName(recipes, name) {
 	const lowerCaseName = name.toLowerCase().trim();
-	return recipes.find(recipe =>
+	return recipes.filter(recipe =>
 	  recipe.name.toLowerCase().includes(lowerCaseName)
 	);
   }
