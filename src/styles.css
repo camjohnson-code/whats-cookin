@@ -113,6 +113,10 @@ ul {
   cursor: pointer;
 }
 
+.hidden {
+  display: none;
+}
+
 .selected {
   color: var(--selected);
   font-weight: 700;

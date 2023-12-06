@@ -3,10 +3,11 @@ function filterByTag(recipes, tag) {
 }
 
 function getRecipeByName(recipes, name) {
-  return recipes.find(
-    (recipe) => recipe.name.toLowerCase() === name.toLowerCase()
-  );
-}
+	const lowerCaseName = name.toLowerCase().trim();
+	return recipes.find(recipe =>
+	  recipe.name.toLowerCase().includes(lowerCaseName)
+	);
+  }
 
 function getIngredientNames(recipe , ingredientsData) {
 	if ((!recipe) || (!ingredientsData)) {

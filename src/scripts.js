@@ -8,5 +8,5 @@ import ingredientsData from './data/ingredients'
 // Below are examples of how you can import functions from either the recipes or domUpdates files.
 // import { findRecipeIngredients  } from './recipes';
 import { displayRecipes } from './domUpdates'
-import { testFunction } from './domUpdates2';
+import { returnListByTag, returnSearchedRecipe } from './domUpdates2';
 import { testFunction2 } from './domUpdates';
