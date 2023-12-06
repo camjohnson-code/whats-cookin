@@ -3,7 +3,7 @@
   --white: #ffffff;
   --brown: #161111;
   --orange: #c28964;
-  --selected: #5D5F2D;
+  --selected: #5d5f2d;
 }
 
 body {
@@ -38,6 +38,16 @@ header {
   background-size: 100%;
   background-repeat: no-repeat;
   height: 250px;
+}
+
+.x-button {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  font-weight: 400;
+  font-size: 30px;
+  margin: 0;
+  cursor: pointer;
 }
 
 .logo {
@@ -122,25 +132,25 @@ ul {
   font-weight: 700;
 }
 
-.grid-container {
+.recipes-container {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
 }
 
-.grid-item {
+.recipe-item {
   height: 250px;
-  width: 300px;
+  width: 20%;
   text-align: center;
   margin-right: 20px;
 }
 
-.grid-item img,
-.grid-item p {
+.recipe-item img,
+.recipe-item p {
   cursor: pointer;
 }
 
-.grid-item img {
+.recipe-item img {
   height: 150px;
   width: auto;
   aspect-ratio: 1 / 1;
@@ -149,14 +159,15 @@ ul {
 }
 
 .recipe-name {
-  padding: 0 30px 0 30px;
+  padding-left: 15vw;
+  padding-right: 15vw;
 }
 
- .recipe-image {
+.recipe-image {
   height: 100px;
   width: 100px;
   border-radius: 50%;
- }
+}
 
 header span {
   position: absolute;
@@ -197,6 +208,95 @@ header span {
   right: 25px;
   font-size: 36px;
   margin-left: 50px;
+}
+
+.recipe{
+	width: 100%;
+	height: 100vh;
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-start;
+	align-items: center;
+  font-family: 'Poppins', sans-serif;
+}
+
+.recipe-top {
+  width: 100%;
+  height: 50%;
+  display: flex;
+  border-bottom: 1px solid var(--orange);
+}
+
+.recipe-title {
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.recipe-title h1 {
+  font-weight: 500;
+  font-size: 55px;
+  text-align: center;
+  padding: 0 50px;
+}
+
+.orange-text {
+  color: var(--orange);
+}
+
+.tags {
+  padding: 0 200px;
+  text-align: center;
+}
+
+.recipe-title p {
+  font-weight: 500;
+}
+
+.recipe-title button{
+  border: none;
+  font-family: 'Poppins', sans-serif;
+  background-color: var(--lightGray);
+  width: 125px;
+  aspect-ratio: 4 / 1;
+  font-size: 13px;
+  font-weight: 200;
+}
+
+.fa-bookmark {
+  padding-right: 5px;
+}
+
+.recipe-picture {
+  width: 50%;
+  overflow: hidden;
+}
+
+.recipe-picture img {
+  width: 100%;
+  height: auto;
+}
+
+.recipe-bottom {
+  width: 100%;
+  display: flex;
+  padding-bottom: 10px;
+}
+
+.recipe-ingredients {
+  width: 35%;
+  padding-left: 5vw;
+}
+
+.recipe-instructions{
+  width: 65%;
+  padding-right: 5vw;
+}
+
+.hidden {
+  display: none;
 }
 
 @media screen and (max-height: 450px) {
