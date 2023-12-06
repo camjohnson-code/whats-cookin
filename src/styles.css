@@ -1,6 +1,9 @@
 :root {
-  --lightGray: lightgray;
-  --white: white;
+  --lightGray: #e7e5e6;
+  --white: #ffffff;
+  --brown: #161111;
+  --orange: #c28964;
+  --selected: #5D5F2D;
 }
 
 body {
@@ -11,14 +14,19 @@ body {
 h1 {
   font-family: 'Aleo', serif;
   font-weight: 200;
-  font-size: 66px;
+  margin: 0;
 }
 
 h2 {
-  font-family:'Roboto', sans-serif;
-  font-size: 24px;
+  font-family: 'Roboto', sans-serif;
   font-weight: 100;
-  ;
+  margin: 0;
+}
+
+p {
+  font-family: 'Roboto', sans-serif;
+  font-weight: 300;
+  font-size: 17;
 }
 
 header {
@@ -26,74 +34,119 @@ header {
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
   background-size: 100%;
   background-repeat: no-repeat;
   height: 250px;
- };
-
- .tagline {
-  font-family: 'Roboto', sans-serif;
-  font-weight: 200;
-  justify-content: space-around;
-
- }
- 
- .tagbar {
-  display: flex;
-  margin: 50px;
- }
-
- .tag-button {
-  background-color: #E7E5E6;
-  border: none;
-  color: #C28964;
-  font-family: 'Roboto', sans-serif;
-  font-size: 17px;
-  font-weight: 300;
-  margin: 10px;
 }
- 
- ul {
-  display: flex;
-  margin: auto;
-  justify-content: space-evenly;
-  list-style-type: none;
-  background-color: #E7E5E6;
-  border-radius: 25px;
-  color: var(--white);
-  height: 50px;
- }
 
- input {
-  position: fixed;
-  right: 0;
+.logo {
+  font-size: 66px;
+}
+
+.topnav {
+  width: 50vw;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.topnav input {
+  width: 488px;
+  height: 20px;
+  background-color: var(--white);
+  font-size: 15px;
+  font-weight: 200;
+  margin-top: 20px;
+  font-family: 'Roboto', sans-serif;
   border: none;
   border-radius: 25px;
   padding: 10px 30px;
-  font-size: 20px;
+}
+
+.search-bar {
+  position: relative;
+  display: inline-block;
+}
+
+.search-input {
+  padding-right: 25px;
+}
+
+i.fa-magnifying-glass {
+  transform: translateY(-50%);
+  z-index: 1;
+}
+
+.tagline {
   font-family: 'Roboto', sans-serif;
-  font-weight: 300;
-  background-color: var(--lightGray);
-  margin-bottom: 1vh;
-  
- }
+  font-weight: 200;
+  font-size: 24px;
+}
 
- .grid-container {
-  display: grid;
-  height: 50vh;
-  grid-template-columns: 1fr 1fr 1fr 1fr;
-  /* grid-template-rows: 1fr 1fr; */
-  row-gap: 50px;
-  column-gap: 50px;
-  justify-items: center;
+.tagbar {
+  display: flex;
+  margin: 50px;
+}
+
+ul {
+  display: flex;
+  margin: auto;
+  padding: 0;
+  justify-content: space-evenly;
   align-items: center;
- }
+  list-style-type: none;
+  background-color: var(--lightGray);
+  border-radius: 25px;
+  height: 50px;
+  width: 80%;
+}
 
- .grid-item {
-  height: 100px;
-  width: 100px;
-  border: red 1px solid;
- }
+.tag-button {
+  border: none;
+  color: var(--orange);
+  background-color: var(--lightGray);
+  font-family: 'Roboto', sans-serif;
+  font-size: 17px;
+  font-weight: 300;
+  cursor: pointer;
+}
+
+.selected {
+  color: var(--selected);
+  font-weight: 700;
+}
+
+.grid-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.grid-item {
+  height: 250px;
+  width: 300px;
+  text-align: center;
+  margin-right: 20px;
+}
+
+.grid-item img,
+.grid-item p {
+  cursor: pointer;
+}
+
+.grid-item img {
+  height: 150px;
+  width: auto;
+  aspect-ratio: 1 / 1;
+  overflow: hidden;
+  border-radius: 50%;
+}
+
+.recipe-name {
+  padding: 0 30px 0 30px;
+}
 
  .recipe-image {
   height: 100px;
@@ -114,35 +167,39 @@ header span {
   z-index: 1;
   top: 0;
   left: 0;
-  background-color: var(--lightGray);
+  background-color: var(--brown);
   overflow-x: hidden;
   transition: 0.5s;
   padding-top: 60px;
+  text-align: center;
+}
+
+.sidenav h1 {
+  font-size: 50px;
+  font-weight: 100;
 }
 
 .sidenav a {
-  padding: 10px 10px 10px 40px;
   text-decoration: none;
-  font-family: "Aleo", sans-serif;
+  font-family: 'Poppins', sans-serif;
   font-size: 25px;
   color: var(--white);
-  display: flex;
   transition: 0.3s;
-}
-
-.sidenav a:hover {
-  color: aquamarine;
 }
 
 .sidenav .closebtn {
   position: absolute;
   top: 0;
   right: 25px;
-  font-size:36px;
+  font-size: 36px;
   margin-left: 50px;
 }
 
 @media screen and (max-height: 450px) {
-  .sidenav {padding-top: 15px;}
-  .sidenav a {font-size: 18px;}
+  .sidenav {
+    padding-top: 15px;
+  }
+  .sidenav a {
+    font-size: 18px;
+  }
 }
