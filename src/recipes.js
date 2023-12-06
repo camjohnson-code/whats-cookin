@@ -38,6 +38,6 @@ export {
   filterByTag,
   getRecipeByName,
   getIngredientNames,
-	getIngredientPriceSum,
-	getRecipeInstructions
+  getIngredientPriceSum,
+  getRecipeInstructions
 };

@@ -148,6 +148,12 @@ ul {
   padding: 0 30px 0 30px;
 }
 
+ .recipe-image {
+  height: 100px;
+  width: 100px;
+  border-radius: 50%;
+ }
+
 header span {
   position: absolute;
   top: 1vh;
