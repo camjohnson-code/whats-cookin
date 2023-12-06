@@ -6,9 +6,7 @@ import apiCalls from './apiCalls'
 import './images/turing-logo.png'
 import ingredientsData from './data/ingredients'
 // Below are examples of how you can import functions from either the recipes or domUpdates files.
-import { findRecipeIngredients } from './recipes';
+// import { findRecipeIngredients  } from './recipes';
 import { displayRecipes } from './domUpdates'
-
-console.log(ingredientsData)
-findRecipeIngredients("Dirty Steve's Original Wing Sauce")
-displayRecipes();
+import { testFunction } from './domUpdates2';
+import { testFunction2 } from './domUpdates';
