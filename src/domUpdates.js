@@ -6,8 +6,10 @@ import {
   getRecipeInstructions,
 } from './recipes.js';
 
+import {randomizeUser , addRecipe, removeRecipe} from './users.js';
 import recipeData from './data/recipes.js';
 import ingredientsData from './data/ingredients.js';
+import usersData from './data/users.js';
 
 // Query Selectors
 const allTags = document.querySelectorAll('.tag-button');
@@ -16,6 +18,7 @@ const tagBar = document.querySelector('.tagbar');
 const topNav = document.querySelector('.topnav');
 const header = document.querySelector('header');
 const fullPageRecipe = document.querySelector('.recipe');
+const recipeTitleSection = document.querySelector('.recipe-title');
 const recipeTitle = document.querySelector('.recipe-title-h1');
 const tagsParagraph = document.querySelector('.tags');
 const recipeImage = document.querySelector('.recipe-picture');
@@ -24,6 +27,9 @@ const recipeIngredientsSection = document.querySelector('.recipe-ingredients');
 const recipeInstructionsSection = document.querySelector('.recipe-instructions');
 const xBtn = document.querySelector('.x-button');
 const searchInput = document.querySelector('.search-input');
+const saveBtn = document.querySelector('.save-button');
+const savedBtn = document.querySelector('.save-button-active');
+var currentUser = {};
 
 // Event Listeners
 allTags.forEach((tag) => {
@@ -32,25 +38,22 @@ allTags.forEach((tag) => {
 
 searchInput.addEventListener('keypress', returnSearchedRecipe);
 
-window.addEventListener('load', generateRecipes(recipeData));
+window.addEventListener('load', function() {
+  generateRecipes(recipeData);
+  currentUser = randomizeUser(usersData);
+});
 
 header.addEventListener('click', function(event) {
-  if (event.target.classList.contains('x-button')) {
-    header.style.backgroundImage = "url('images/whats-cooking-banner.jpg')";
-    header.style.backgroundColor = '';
-    header.style.height = '250px';
-    xBtn.classList.add('hidden');
-    topNav.classList.remove('hidden');
-    tagBar.classList.remove('hidden');
-    displayedRecipesSection.classList.remove('hidden');
-    fullPageRecipe.classList.add('hidden');
-  }
+  closeRecipePage(event);
+})
+
+fullPageRecipe.addEventListener('click', function(event) {
+  toggleSaveButton(event);
 })
 
 displayedRecipesSection.addEventListener('click', function (event) {
   displayRecipe(event);
 });
-
 
 // Functions
 function returnSearchedRecipe(event) {
@@ -108,12 +111,18 @@ function displayRecipe(event) {
 
     const price = getIngredientPriceSum(recipe, ingredientsData) / 100;
 
+    if (currentUser.recipesToCook.some(savedRecipe => savedRecipe.id === recipe.id)) {
+      hide(saveBtn);
+      show(savedBtn);
+    }
+    
     generateRecipeTitle(recipe.name);
     generateRecipeTags(recipe.tags);
     generateRecipeImage(recipe.image);
     generateRecipePrice(price);
     generateRecipeIngredients(recipe.ingredients);
     generateRecipeInstructions(recipe.instructions);
+		
   }
 }
 
@@ -146,6 +155,39 @@ function generateRecipeInstructions(instructions) {
   instructions.forEach(instruction => recipeInstructionsSection.innerHTML += `<h3>Step ${instruction.number}</h3><p>${instruction.instruction}</p>`)
 }
 
+function toggleSaveButton(event) {
+  const recipe = recipeData.find(
+    (recipe) =>
+      recipe.name ===
+      event.target.closest('div').querySelector('h1').textContent
+  );
+
+  if (event.target.classList.contains('save-button')) {
+    hide(saveBtn);
+    show(savedBtn);
+		addRecipe(recipe, currentUser);
+  } else {
+    show(saveBtn);
+    hide(savedBtn);
+    removeRecipe(currentUser, recipe);
+  }
+}
+
+function closeRecipePage(event) {
+  if (event.target.classList.contains('x-button')) {
+    header.style.backgroundImage = "url('images/whats-cooking-banner.jpg')";
+    header.style.backgroundColor = '';
+    header.style.height = '250px';
+    show(topNav);
+    show(tagBar);
+    show(displayedRecipesSection);
+    show(saveBtn);
+    hide(fullPageRecipe);
+    hide(xBtn);
+    hide(savedBtn);
+  }
+}
+
 function hide(element) {
   element.classList.add('hidden');
 }
@@ -154,4 +196,4 @@ function show(element) {
   element.classList.remove('hidden');
 }
 
-export { returnListByTag, generateRecipes, returnSearchedRecipe };
+export { returnListByTag, generateRecipes, returnSearchedRecipe, hide, show };
