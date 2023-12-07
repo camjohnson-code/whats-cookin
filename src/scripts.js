@@ -17,7 +17,9 @@ import {
   returnSearchedRecipe,
   returnListByTag,
   generateRecipes,
-  isMyRecipeTab
+  isMyRecipeTab,
+  showNav,
+  hideNav
 } from './domUpdates';
 
 import { displayRecipes } from './domUpdates'

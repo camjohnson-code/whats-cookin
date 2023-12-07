@@ -28,51 +28,43 @@ const recipeInstructionsSection = document.querySelector('.recipe-instructions')
 const xBtn = document.querySelector('.x-button');
 const searchInput = document.querySelector('.search-input');
 const myRecipesBtn = document.querySelector('.my-recipes')
-// const homeBtn = document.querySelector('.fa-house')
 const homeView = document.querySelector('.home-view')
-let isUserRecipesView = false;
-let mySavedRecipes;
 const saveBtn = document.querySelector('.save-button');
 const savedBtn = document.querySelector('.save-button-active');
+const sideBar = document.querySelector('.sidenav');
+let isUserRecipesView = false;
 var currentUser = {};
 
 // Event Listeners
+sideBar.addEventListener('click', function(event) {
+  closeRecipePage(event);
+})
 allTags.forEach((tag) => {
   tag.addEventListener('click', returnListByTag);
 });
-
 searchInput.addEventListener('keypress', returnSearchedRecipe);
-
 window.addEventListener('load', function() {
   generateRecipes(recipeData);
   currentUser = randomizeUser(usersData);
 });
-
-
 header.addEventListener('click', function(event) {
   closeRecipePage(event);
 })
-
 fullPageRecipe.addEventListener('click', function(event) {
   toggleSaveButton(event);
 })
 allTags.forEach((tag) => {
   tag.addEventListener('click', returnListByTag);
 });
+displayedRecipesSection.addEventListener('click', function (event) {
+  displayRecipe(event);
+});
 searchInput.addEventListener('keypress', returnSearchedRecipe);
 window.addEventListener('load', generateRecipes(recipeData));
 myRecipesBtn.addEventListener('click', viewMyRecipes)
 homeView.addEventListener('click', goHome)
-// saveBtn.addEventListener('click' saveRecipe)
-displayedRecipesSection.addEventListener('click', function (event) {
-  displayRecipe(event);
-});
 
 // Functions
-function saveRecipe() {
-
-}
-
 function goHome(){
   isUserRecipesView = false
   console.log("is user recipe view", isUserRecipesView);
@@ -80,8 +72,9 @@ function goHome(){
 }
 
 function viewMyRecipes(userRecipes) {
-  // generateRecipes(userRecipes)
+  console.log(currentUser.recipesToCook);
   displayedRecipesSection.innerHTML = ''
+  generateRecipes(currentUser.recipesToCook)
   isUserRecipesView = true
   console.log("is user recipe view", isUserRecipesView);
 }
@@ -92,7 +85,7 @@ function returnSearchedRecipe(event) {
 
     if (isUserRecipesView) {
       console.log("searching user's saved recipes");
-      const result = (getRecipeByName(mySavedRecipes, searchText));
+      const result = (getRecipeByName(currentUser.recipesToCook, searchText));
       if (result) {
         generateRecipes(result);
       }
@@ -106,16 +99,15 @@ function returnSearchedRecipe(event) {
   }
 }
 
-
 function returnListByTag(event){
   const buttonID = event.target.id;
 
   if (isUserRecipesView) {
     if (buttonID === 'all'){
-        const filteredRecipes = mySavedRecipes;
+        const filteredRecipes = currentUser.recipesToCook;
         generateRecipes(filteredRecipes);
     } else { 
-        const filteredRecipes =  filterByTag(mySavedRecipes, buttonID);
+        const filteredRecipes =  filterByTag(currentUser.recipesToCook, buttonID);
         generateRecipes(filteredRecipes);
       }
   } else {
@@ -127,23 +119,6 @@ function returnListByTag(event){
           generateRecipes(filteredRecipes);
       }
   }
-
-  // if (buttonID === 'all'){
-  //   if (isUserRecipesView) {
-  //     const filteredRecipes = mySavedRecipes;
-  //     generateRecipes(filteredRecipes);
-  //   } else {
-  //     const filteredRecipes = recipeData;
-  //     generateRecipes(filteredRecipes);
-  //   }
-  // } else {
-  //   if (isUserRecipesView) {
-  //     const filteredRecipes =  filterByTag(mySavedRecipes, buttonID);
-  //     generateRecipes(filteredRecipes);
-  //   } else {
-  //     const filteredRecipes =  filterByTag(recipeData, buttonID);
-  //     generateRecipes(filteredRecipes);
-  //   }
 }
 
 function generateRecipes(recipes) {
@@ -241,7 +216,7 @@ function toggleSaveButton(event) {
 }
 
 function closeRecipePage(event) {
-  if (event.target.classList.contains('x-button')) {
+  if (event.target.classList.contains('x-button') || event.target.classList.contains('my-recipes') || event.target.classList.contains('home-view')) {
     header.style.backgroundImage = "url('images/whats-cooking-banner.jpg')";
     header.style.backgroundColor = '';
     header.style.height = '250px';
@@ -263,5 +238,12 @@ function show(element) {
   element.classList.remove('hidden');
 }
 
+function showNav() {
+  document.getElementById('mainSidebar').style.width = '250px';
+}
+function hideNav() {
+  document.getElementById('mainSidebar').style.width = '0';
+}
 
-export { returnListByTag, generateRecipes, returnSearchedRecipe, viewHome, viewMyRecipes };
+
+export { returnListByTag, generateRecipes, returnSearchedRecipe, goHome, viewMyRecipes, showNav, hideNav };
