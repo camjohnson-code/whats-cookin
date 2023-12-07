@@ -24,16 +24,14 @@ const recipeIngredientsSection = document.querySelector('.recipe-ingredients');
 const recipeInstructionsSection = document.querySelector('.recipe-instructions');
 const xBtn = document.querySelector('.x-button');
 const searchInput = document.querySelector('.search-input');
+const myRecipesBtn = document.querySelector('.my-recipes')
+// const homeBtn = document.querySelector('.fa-house')
+const homeView = document.querySelector('.home-view')
+const saveBtn = document.querySelector('.save-button')
+let isUserRecipesView = false;
+let mySavedRecipes;
 
 // Event Listeners
-allTags.forEach((tag) => {
-  tag.addEventListener('click', returnListByTag);
-});
-
-searchInput.addEventListener('keypress', returnSearchedRecipe);
-
-window.addEventListener('load', generateRecipes(recipeData));
-
 header.addEventListener('click', function(event) {
   if (event.target.classList.contains('x-button')) {
     header.style.backgroundImage = "url('images/whats-cooking-banner.jpg')";
@@ -46,34 +44,95 @@ header.addEventListener('click', function(event) {
     fullPageRecipe.classList.add('hidden');
   }
 })
-
+allTags.forEach((tag) => {
+  tag.addEventListener('click', returnListByTag);
+});
+searchInput.addEventListener('keypress', returnSearchedRecipe);
+window.addEventListener('load', generateRecipes(recipeData));
+myRecipesBtn.addEventListener('click', viewMyRecipes)
+homeView.addEventListener('click', goHome)
+// saveBtn.addEventListener('click' saveRecipe)
 displayedRecipesSection.addEventListener('click', function (event) {
   displayRecipe(event);
 });
 
 
 // Functions
+function saveRecipe() {
+
+}
+
+function goHome(){
+  isUserRecipesView = false
+  console.log("is user recipe view", isUserRecipesView);
+  generateRecipes(recipeData)
+}
+
+function viewMyRecipes(userRecipes) {
+  // generateRecipes(userRecipes)
+  displayedRecipesSection.innerHTML = ''
+  isUserRecipesView = true
+  console.log("is user recipe view", isUserRecipesView);
+}
+
 function returnSearchedRecipe(event) {
   if (event.key === 'Enter') {
     const searchText = event.target.value;
-    const result = (getRecipeByName(recipeData, searchText));
 
-    if (result) {
-      generateRecipes(result);
+    if (isUserRecipesView) {
+      console.log("searching user's saved recipes");
+      const result = (getRecipeByName(mySavedRecipes, searchText));
+      if (result) {
+        generateRecipes(result);
+      }
+    } else {
+      console.log("searching all recipes");
+      const result = (getRecipeByName(recipeData, searchText));
+      if (result) {
+        generateRecipes(result);
+      }
     }
   }
 }
 
+
 function returnListByTag(event){
   const buttonID = event.target.id;
 
-  if (buttonID === 'all'){
-    const filteredRecipes = recipeData;
-    generateRecipes(filteredRecipes);
+  if (isUserRecipesView) {
+    if (buttonID === 'all'){
+        const filteredRecipes = mySavedRecipes;
+        generateRecipes(filteredRecipes);
+    } else { 
+        const filteredRecipes =  filterByTag(mySavedRecipes, buttonID);
+        generateRecipes(filteredRecipes);
+      }
   } else {
-    const filteredRecipes =  filterByTag(recipeData, buttonID);
-    generateRecipes(filteredRecipes);
+      if (buttonID === 'all'){
+          const filteredRecipes = recipeData;
+          generateRecipes(filteredRecipes);
+      } else { 
+          const filteredRecipes =  filterByTag(recipeData, buttonID);
+          generateRecipes(filteredRecipes);
+      }
   }
+
+  // if (buttonID === 'all'){
+  //   if (isUserRecipesView) {
+  //     const filteredRecipes = mySavedRecipes;
+  //     generateRecipes(filteredRecipes);
+  //   } else {
+  //     const filteredRecipes = recipeData;
+  //     generateRecipes(filteredRecipes);
+  //   }
+  // } else {
+  //   if (isUserRecipesView) {
+  //     const filteredRecipes =  filterByTag(mySavedRecipes, buttonID);
+  //     generateRecipes(filteredRecipes);
+  //   } else {
+  //     const filteredRecipes =  filterByTag(recipeData, buttonID);
+  //     generateRecipes(filteredRecipes);
+  //   }
 }
 
 function generateRecipes(recipes) {
@@ -154,4 +213,4 @@ function show(element) {
   element.classList.remove('hidden');
 }
 
-export { returnListByTag, generateRecipes, returnSearchedRecipe };
+export { returnListByTag, generateRecipes, returnSearchedRecipe, viewHome, viewMyRecipes };
