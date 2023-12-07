@@ -32,6 +32,8 @@ const homeView = document.querySelector('.home-view')
 const saveBtn = document.querySelector('.save-button');
 const savedBtn = document.querySelector('.save-button-active');
 const sideBar = document.querySelector('.sidenav');
+const showNavBtn = document.querySelector('.show-button');
+const hideNavBtn = document.querySelector('.hide-button')
 let isUserRecipesView = false;
 var currentUser = {};
 
@@ -61,14 +63,17 @@ displayedRecipesSection.addEventListener('click', function (event) {
 });
 searchInput.addEventListener('keypress', returnSearchedRecipe);
 window.addEventListener('load', generateRecipes(recipeData));
-myRecipesBtn.addEventListener('click', viewMyRecipes)
-homeView.addEventListener('click', goHome)
+myRecipesBtn.addEventListener('click', viewMyRecipes);
+homeView.addEventListener('click', goHome);
+showNavBtn.addEventListener('click',showNav);
+hideNavBtn.addEventListener('click', hideNav);
 
 // Functions
 function goHome(){
   isUserRecipesView = false
   console.log("is user recipe view", isUserRecipesView);
   generateRecipes(recipeData)
+	hideNav();
 }
 
 function viewMyRecipes(userRecipes) {
@@ -77,6 +82,7 @@ function viewMyRecipes(userRecipes) {
   generateRecipes(currentUser.recipesToCook)
   isUserRecipesView = true
   console.log("is user recipe view", isUserRecipesView);
+	hideNav();
 }
 
 function returnSearchedRecipe(event) {

@@ -14,9 +14,8 @@
     <header>
       <span
         style="font-size: 40px; cursor: pointer; color: #c28964"
-        onclick="showNav()"
-        >&#9776;</span
-      >
+        class="show-button"
+        >&#9776;</span>
       <p class="x-button hidden">X</p>
       <div class="topnav">
         <h1 class="logo">What's Cookin</h1>
@@ -28,7 +27,7 @@
       </div>
     </header>
     <div id="mainSidebar" class="sidenav">
-      <a href="javascript:void(0)" class="closebtn" onclick="hideNav()"
+      <a href="javascript:void(0)" class="hide-button"
         >&times;</a
       >
       <a href="#"><h1>Hello User</h1></a>
@@ -80,14 +79,5 @@
     </main>
   </body>
   <!-- Do not include the scripts.js file here - it is done automatically by the webpack server -->
-
   <script src="bundle.js"></script>
-  <script>
-    function showNav() {
-      document.getElementById('mainSidebar').style.width = '250px';
-    }
-    function hideNav() {
-      document.getElementById('mainSidebar').style.width = '0';
-    }
-  </script>
 </html>
