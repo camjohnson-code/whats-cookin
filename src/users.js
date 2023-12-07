@@ -14,7 +14,7 @@ function randomizeUser(users) {
 
 function addRecipe(recipe, user) {
 	user.recipesToCook.push(recipe);
-	console.log(user);
+	console.log(user.recipesToCook);
 }
 
 function removeRecipe(currentUser, currentRecipe){
