@@ -7,10 +7,7 @@ import {
 } from './recipes.js';
 
 import { getUser, getIngredients, getRecipes} from './apiCalls.js';
-import {randomizeUser , addRecipe, removeRecipe} from './users.js';
-// import recipeData from './data/recipes.js';
-// import ingredientsData from './data/ingredients.js';
-import usersData from './data/users.js';
+import { addRecipe, removeRecipe} from './users.js';
 
 // Query Selectors
 const allTags = document.querySelectorAll('.tag-button');
@@ -28,13 +25,13 @@ const recipeIngredientsSection = document.querySelector('.recipe-ingredients');
 const recipeInstructionsSection = document.querySelector('.recipe-instructions');
 const xBtn = document.querySelector('.x-button');
 const searchInput = document.querySelector('.search-input');
-const myRecipesBtn = document.querySelector('.my-recipes')
-const homeView = document.querySelector('.home-view')
+const myRecipesBtn = document.querySelector('.my-recipes');
+const homeView = document.querySelector('.home-view');
 const saveBtn = document.querySelector('.save-button');
 const savedBtn = document.querySelector('.save-button-active');
 const sideBar = document.querySelector('.sidenav');
 const showNavBtn = document.querySelector('.show-button');
-const hideNavBtn = document.querySelector('.hide-button')
+const hideNavBtn = document.querySelector('.hide-button');
 let isUserRecipesView = false;
 let currentUser;
 let ingredientsData;
@@ -43,77 +40,77 @@ let recipeData;
 
 function assignCurrentUser() { 
   getUser().then(user => {
-    currentUser = user
-    console.log(currentUser);
+    currentUser = user;
   })
 }
 
 function assignIngredients() {
   getIngredients().then(ingredients => {
     ingredientsData = ingredients.ingredients;
-    console.log(ingredientsData);
   })
 }
 
 function assignRecipes() {
   getRecipes().then(recipes => {
     recipeData = recipes.recipes;
-    generateRecipes(recipeData)
-    console.log(recipeData);
+    generateRecipes(recipeData);
   })
 }
-
-
-
 
 // Event Listeners
 sideBar.addEventListener('click', function(event) {
   closeRecipePage(event);
 })
+
 allTags.forEach((tag) => {
   tag.addEventListener('click', returnListByTag);
 });
+
 searchInput.addEventListener('keypress', returnSearchedRecipe);
+
 window.addEventListener('load', function() {
-  assignCurrentUser()
-  assignIngredients()
-  assignRecipes()
-  // setTimeout(generateRecipes(recipeData), 2000);
+  assignCurrentUser();
+  assignIngredients();
+  assignRecipes();
 });
+
 header.addEventListener('click', function(event) {
   closeRecipePage(event);
 })
+
 fullPageRecipe.addEventListener('click', function(event) {
   toggleSaveButton(event);
 })
+
 allTags.forEach((tag) => {
   tag.addEventListener('click', returnListByTag);
 });
+
 displayedRecipesSection.addEventListener('click', function (event) {
   displayRecipe(event);
 });
+
 searchInput.addEventListener('keypress', returnSearchedRecipe);
+
 myRecipesBtn.addEventListener('click', viewMyRecipes);
+
 homeView.addEventListener('click', goHome);
+
 showNavBtn.addEventListener('click',showNav);
+
 hideNavBtn.addEventListener('click', hideNav);
 
 // Functions
-
 function goHome(){
-  isUserRecipesView = false
-  console.log("is user recipe view", isUserRecipesView);
-  generateRecipes(recipeData)
+  isUserRecipesView = false;
+  generateRecipes(recipeData);
 	hideNav();
 }
 
 function viewMyRecipes(userRecipes) {
-  console.log("current user", currentUser);
-  console.log(currentUser.recipesToCook);
-  displayedRecipesSection.innerHTML = ''
-  generateRecipes(currentUser.recipesToCook)
-  isUserRecipesView = true
-  console.log("is user recipe view", isUserRecipesView);
+  displayedRecipesSection.innerHTML = '';
+  generateRecipes(currentUser.recipesToCook);
+  isUserRecipesView = true;
 	hideNav();
 }
 
@@ -122,13 +119,11 @@ function returnSearchedRecipe(event) {
     const searchText = event.target.value;
 
     if (isUserRecipesView) {
-      console.log("searching user's saved recipes");
       const result = (getRecipeByName(currentUser.recipesToCook, searchText));
       if (result) {
         generateRecipes(result);
       }
     } else {
-      console.log("searching all recipes");
       const result = (getRecipeByName(recipeData, searchText));
       if (result) {
         generateRecipes(result);
@@ -158,9 +153,8 @@ function returnListByTag(event){
       }
   }
 }
-//generateRecipes Goes Here
+
 function generateRecipes(recipes) {
-  console.log("recipes inside generateRecipes", recipes);
   displayedRecipesSection.innerHTML = '';
   recipes.forEach((recipe) => {
     displayedRecipesSection.innerHTML += `
@@ -222,17 +216,17 @@ function generateRecipeImage(image) {
 
 function generateRecipePrice(price) {
   recipeIngredientsSection.innerHTML = '';
-  recipeIngredientsSection.innerHTML = `<h3>Recipe Cost</h3><p class="price-text">$${price.toFixed(2)}</p>`
+  recipeIngredientsSection.innerHTML = `<h3>Recipe Cost</h3><p class="price-text">$${price.toFixed(2)}</p>`;
 }
 
 function generateRecipeIngredients(ingredients) {
-  recipeIngredientsSection.innerHTML += '<h3>Ingredients</h3>'
-  ingredients.forEach(ingredient => recipeIngredientsSection.innerHTML += `<p>${ingredient.quantity.amount} ${ingredient.quantity.unit} ${ingredientsData.find(iteration => iteration.id === ingredient.id).name}</p>`)
+  recipeIngredientsSection.innerHTML += '<h3>Ingredients</h3>';
+  ingredients.forEach(ingredient => recipeIngredientsSection.innerHTML += `<p>${ingredient.quantity.amount} ${ingredient.quantity.unit} ${ingredientsData.find(iteration => iteration.id === ingredient.id).name}</p>`);
 }
 
 function generateRecipeInstructions(instructions) {
-  recipeInstructionsSection.innerHTML = ''
-  instructions.forEach(instruction => recipeInstructionsSection.innerHTML += `<h3>Step ${instruction.number}</h3><p>${instruction.instruction}</p>`)
+  recipeInstructionsSection.innerHTML = '';
+  instructions.forEach(instruction => recipeInstructionsSection.innerHTML += `<h3>Step ${instruction.number}</h3><p>${instruction.instruction}</p>`);
 }
 
 function toggleSaveButton(event) {
@@ -282,6 +276,5 @@ function showNav() {
 function hideNav() {
   document.getElementById('mainSidebar').style.width = '0';
 }
-
 
 export { returnListByTag, generateRecipes, returnSearchedRecipe, goHome, viewMyRecipes, showNav, hideNav };

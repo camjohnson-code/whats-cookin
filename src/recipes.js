@@ -4,10 +4,11 @@ function filterByTag(recipes, tag) {
 
 function getRecipeByName(recipes, name) {
 	const lowerCaseName = name.toLowerCase().trim();
+	
 	return recipes.filter(recipe =>
 	  recipe.name.toLowerCase().includes(lowerCaseName)
 	);
-  }
+}
 
 function getIngredientNames(recipe , ingredientsData) {
 	if ((!recipe) || (!ingredientsData)) {
