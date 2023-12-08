@@ -6,9 +6,10 @@ import {
   getRecipeInstructions,
 } from './recipes.js';
 
+import { getUser, getIngredients, getRecipes} from './apiCalls.js';
 import {randomizeUser , addRecipe, removeRecipe} from './users.js';
-import recipeData from './data/recipes.js';
-import ingredientsData from './data/ingredients.js';
+// import recipeData from './data/recipes.js';
+// import ingredientsData from './data/ingredients.js';
 import usersData from './data/users.js';
 
 // Query Selectors
@@ -35,7 +36,35 @@ const sideBar = document.querySelector('.sidenav');
 const showNavBtn = document.querySelector('.show-button');
 const hideNavBtn = document.querySelector('.hide-button')
 let isUserRecipesView = false;
-var currentUser = {};
+let currentUser;
+let ingredientsData;
+let recipeData;
+
+
+function assignCurrentUser() { 
+  getUser().then(user => {
+    currentUser = user
+    console.log(currentUser);
+  })
+}
+
+function assignIngredients() {
+  getIngredients().then(ingredients => {
+    ingredientsData = ingredients.ingredients;
+    console.log(ingredientsData);
+  })
+}
+
+function assignRecipes() {
+  getRecipes().then(recipes => {
+    recipeData = recipes.recipes;
+    generateRecipes(recipeData)
+    console.log(recipeData);
+  })
+}
+
+
+
 
 // Event Listeners
 sideBar.addEventListener('click', function(event) {
@@ -46,8 +75,10 @@ allTags.forEach((tag) => {
 });
 searchInput.addEventListener('keypress', returnSearchedRecipe);
 window.addEventListener('load', function() {
-  generateRecipes(recipeData);
-  currentUser = randomizeUser(usersData);
+  assignCurrentUser()
+  assignIngredients()
+  assignRecipes()
+  // setTimeout(generateRecipes(recipeData), 2000);
 });
 header.addEventListener('click', function(event) {
   closeRecipePage(event);
@@ -62,13 +93,13 @@ displayedRecipesSection.addEventListener('click', function (event) {
   displayRecipe(event);
 });
 searchInput.addEventListener('keypress', returnSearchedRecipe);
-window.addEventListener('load', generateRecipes(recipeData));
 myRecipesBtn.addEventListener('click', viewMyRecipes);
 homeView.addEventListener('click', goHome);
 showNavBtn.addEventListener('click',showNav);
 hideNavBtn.addEventListener('click', hideNav);
 
 // Functions
+
 function goHome(){
   isUserRecipesView = false
   console.log("is user recipe view", isUserRecipesView);
@@ -77,6 +108,7 @@ function goHome(){
 }
 
 function viewMyRecipes(userRecipes) {
+  console.log("current user", currentUser);
   console.log(currentUser.recipesToCook);
   displayedRecipesSection.innerHTML = ''
   generateRecipes(currentUser.recipesToCook)
@@ -126,10 +158,10 @@ function returnListByTag(event){
       }
   }
 }
-
+//generateRecipes Goes Here
 function generateRecipes(recipes) {
+  console.log("recipes inside generateRecipes", recipes);
   displayedRecipesSection.innerHTML = '';
-
   recipes.forEach((recipe) => {
     displayedRecipesSection.innerHTML += `
     <div class="recipe-item">
