@@ -5382,4 +5382,4 @@ const recipeData = [
     }
   ]
 
-  export default recipeData
+  //export default recipeData

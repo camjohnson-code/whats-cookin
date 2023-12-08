@@ -9,6 +9,7 @@ var testUser ={
 
 function randomizeUser(users) {
 	let randomUser = users[(Math.floor(Math.random() * users.length) + 1)]
+	// console.log("API Called User", randomUser);
 	return randomUser;	
 }
 
