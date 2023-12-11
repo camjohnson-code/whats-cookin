@@ -1,18 +1,21 @@
-# What's Cookin'? Starter Kit
+# What's Cookin'? 
+### A Web-base Application, Designed to display and store recipes. 
 
-The details of this project are outlined in the <a href="https://frontend.turing.edu/projects/What%27sCookin-PartOne.html" target="\__blank">project spec</a>.
+![What's Cookin Welcome Page](src/images/Whats-Cooking-Welcome-Page.png)
 
-## Set Up
+This application is part of Turing's Module 2 curriculum. This project aims to use the Fetch API to send requests for information regarding various users, recipes, and ingredients. Using that information, our application would create a website showing a list of recipes, including icons to display what those recipes looked like. Clicking on a recipe expands the recipe's information, showing the ingredients needed, how much all those ingredients cost, and the instructions needed to create that recipe. Finally, users can save a selected recipe to their own list through a simple button press. Saved recipes can be access through the sidebar.
 
-1. Within your group, decide on **one** person to have the project repository on their Github account. This person will *fork* this repository - on the top right corner of the page, click the fork button.
-1. Add all group members and your PM as collaborators on the repo  
-1. All group members should then clone down the forked repository. Since you don't want your project to be named "whats-cookin-starter-kit", add an optional argument after the repo url when cloning. The command should look like this: `git clone [remote-address] [what your group wants to name the repo]`.
-1. Once you have cloned the repo, change into the directory and install the project dependencies. Run `npm install` or `npm i` to install project dependencies.
-1. Run `npm start` in the terminal to see the HTML page (you should see some boilerplate HTML displayed on the page).  
-    - `Control + C` is the command to stop running the local server. Closing the terminal without stopping the server first could allow the server to continue to run in the background and cause problems.  
-        - This command is not specific to Webpack; make note of it for future use.
-1. Do not run `npm audit fix --force`. This will update to the latest version of packages. We need to be using `webpack-dev-server@3.11.2` which is not the latest version. If you start to run into Webpack errors, first check that all group members are using the correct version.
+### Created By:
+ #### Matthew Shindel : <matthew@shindel.com>
+ #### Cameron Johnson : <cameron.n.johnson15@gmail.com>
+ #### Ricky Tran : <therichardtran@gmail.com>
+ #### Jeremy Pearson : <jeremy.pearson08@gmail.com>
 
-## Testing
+## How to Use
 
-Mocha and chai are already set up, with a boilerplate test for you.
+1. Clone the github repository to your machine
+1. Open the repository in terminal
+1. Run npm install to install the needed npm files
+1. Run npm start to start the application
+
+
