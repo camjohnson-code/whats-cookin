@@ -7,7 +7,7 @@ import {
   getRecipeInstructions,
 } from '../src/recipes';
 
-describe('filterByTag function ', () => {
+describe('Recipes functions ', () => {
   let testIngredientData;
   let testRecipe;
   beforeEach(function () {
@@ -134,7 +134,7 @@ describe('filterByTag function ', () => {
 
     const result = getRecipeByName(recipeData, 'elvis pancakes');
 
-    expect(result).to.deep.equal({
+    expect(result[0]).to.deep.equal({
       id: 741603,
       image: 'https://spoonacular.com/recipeImages/741603-556x370.jpeg',
       ingredients: '',
@@ -163,7 +163,7 @@ describe('filterByTag function ', () => {
 
     const result = getRecipeByName(recipeData, 'ELVIS pAncAkes');
 
-    expect(result).to.deep.equal({
+    expect(result[0]).to.deep.equal({
       id: 741603,
       image: 'https://spoonacular.com/recipeImages/741603-556x370.jpeg',
       ingredients: '',
