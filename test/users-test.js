@@ -1,7 +1,6 @@
-import { expect } from "chai";
+import { expect } from 'chai';
 import { 
 	randomizeUser,
-    toggleAddToList,
  } from "../src/users";
 
  import {
@@ -10,11 +9,11 @@ import {
   getIngredientNames,
   getIngredientPriceSum,
   getRecipeInstructions,
-} from './recipes.js';
+} from '../src/recipes';
 
 
 
-describe('toogleAddToList ', () => {
+describe('randomizeUser ', () => {
 	let testUser;
 	let testRecipes;
 	beforeEach(function (){

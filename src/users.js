@@ -1,4 +1,4 @@
-import currentUser from './domUpdates.js'
+
 
 var testUser ={
 	"name": "Saige O'Kon",
