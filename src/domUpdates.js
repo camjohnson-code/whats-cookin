@@ -22,7 +22,9 @@ const tagsParagraph = document.querySelector('.tags');
 const recipeImage = document.querySelector('.recipe-picture');
 const priceParagraph = document.querySelector('.price-text');
 const recipeIngredientsSection = document.querySelector('.recipe-ingredients');
-const recipeInstructionsSection = document.querySelector('.recipe-instructions');
+const recipeInstructionsSection = document.querySelector(
+  '.recipe-instructions'
+);
 const xBtn = document.querySelector('.x-button');
 const searchInput = document.querySelector('.search-input');
 const myRecipesBtn = document.querySelector('.my-recipes');
@@ -37,30 +39,29 @@ let currentUser;
 let ingredientsData;
 let recipeData;
 
-
 function assignCurrentUser() { 
   getApiInfo('users').then(user => {
     currentUser = user;
-  })
+  });
 }
 
 function assignIngredients() {
   getApiInfo('ingredients').then(ingredients => {
     ingredientsData = ingredients.ingredients;
-  })
+  });
 }
 
 function assignRecipes() {
   getApiInfo('recipes').then(recipes => {
     recipeData = recipes.recipes;
     generateRecipes(recipeData);
-  })
+  });
 }
 
 // Event Listeners
-sideBar.addEventListener('click', function(event) {
+sideBar.addEventListener('click', function (event) {
   closeRecipePage(event);
-})
+});
 
 allTags.forEach((tag) => {
   tag.addEventListener('click', returnListByTag);
@@ -68,19 +69,19 @@ allTags.forEach((tag) => {
 
 searchInput.addEventListener('keypress', returnSearchedRecipe);
 
-window.addEventListener('load', function() {
+window.addEventListener('load', function () {
   assignCurrentUser();
   assignIngredients();
   assignRecipes();
 });
 
-header.addEventListener('click', function(event) {
+header.addEventListener('click', function (event) {
   closeRecipePage(event);
-})
+});
 
-fullPageRecipe.addEventListener('click', function(event) {
+fullPageRecipe.addEventListener('click', function (event) {
   toggleSaveButton(event);
-})
+});
 
 allTags.forEach((tag) => {
   tag.addEventListener('click', returnListByTag);
@@ -96,22 +97,22 @@ myRecipesBtn.addEventListener('click', viewMyRecipes);
 
 homeView.addEventListener('click', goHome);
 
-showNavBtn.addEventListener('click',showNav);
+showNavBtn.addEventListener('click', showNav);
 
 hideNavBtn.addEventListener('click', hideNav);
 
 // Functions
-function goHome(){
+function goHome() {
   isUserRecipesView = false;
   generateRecipes(recipeData);
-	hideNav();
+  hideNav();
 }
 
 function viewMyRecipes(userRecipes) {
   displayedRecipesSection.innerHTML = '';
   generateRecipes(currentUser.recipesToCook);
   isUserRecipesView = true;
-	hideNav();
+  hideNav();
 }
 
 function returnSearchedRecipe(event) {
@@ -119,12 +120,12 @@ function returnSearchedRecipe(event) {
     const searchText = event.target.value;
 
     if (isUserRecipesView) {
-      const result = (getRecipeByName(currentUser.recipesToCook, searchText));
+      const result = getRecipeByName(currentUser.recipesToCook, searchText);
       if (result) {
         generateRecipes(result);
       }
     } else {
-      const result = (getRecipeByName(recipeData, searchText));
+      const result = getRecipeByName(recipeData, searchText);
       if (result) {
         generateRecipes(result);
       }
@@ -132,25 +133,33 @@ function returnSearchedRecipe(event) {
   }
 }
 
-function returnListByTag(event){
+function returnListByTag(event) {
   const buttonID = event.target.id;
+  const listItems = document.querySelectorAll('.tagbar ul li');
+
+  listItems.forEach(function (li) {
+    const tagButton = li.querySelector('button');
+
+    if (tagButton && tagButton.classList.contains('selected')) tagButton.classList.remove('selected');
+    if (tagButton && tagButton.id === buttonID) tagButton.classList.add('selected');
+  });
 
   if (isUserRecipesView) {
-    if (buttonID === 'all'){
-        const filteredRecipes = currentUser.recipesToCook;
-        generateRecipes(filteredRecipes);
-    } else { 
-        const filteredRecipes =  filterByTag(currentUser.recipesToCook, buttonID);
-        generateRecipes(filteredRecipes);
-      }
+    if (buttonID === 'all') {
+      const filteredRecipes = currentUser.recipesToCook;
+      generateRecipes(filteredRecipes);
+    } else {
+      const filteredRecipes = filterByTag(currentUser.recipesToCook, buttonID);
+      generateRecipes(filteredRecipes);
+    }
   } else {
-      if (buttonID === 'all'){
-          const filteredRecipes = recipeData;
-          generateRecipes(filteredRecipes);
-      } else { 
-          const filteredRecipes =  filterByTag(recipeData, buttonID);
-          generateRecipes(filteredRecipes);
-      }
+    if (buttonID === 'all') {
+      const filteredRecipes = recipeData;
+      generateRecipes(filteredRecipes);
+    } else {
+      const filteredRecipes = filterByTag(recipeData, buttonID);
+      generateRecipes(filteredRecipes);
+    }
   }
 }
 
@@ -185,18 +194,21 @@ function displayRecipe(event) {
 
     const price = getIngredientPriceSum(recipe, ingredientsData) / 100;
 
-    if (currentUser.recipesToCook.some(savedRecipe => savedRecipe.id === recipe.id)) {
+    if (
+      currentUser.recipesToCook.some(
+        (savedRecipe) => savedRecipe.id === recipe.id
+      )
+    ) {
       hide(saveBtn);
       show(savedBtn);
     }
-    
+
     generateRecipeTitle(recipe.name);
     generateRecipeTags(recipe.tags);
     generateRecipeImage(recipe.image);
     generateRecipePrice(price);
     generateRecipeIngredients(recipe.ingredients);
     generateRecipeInstructions(recipe.instructions);
-		
   }
 }
 
@@ -216,17 +228,29 @@ function generateRecipeImage(image) {
 
 function generateRecipePrice(price) {
   recipeIngredientsSection.innerHTML = '';
-  recipeIngredientsSection.innerHTML = `<h3>Recipe Cost</h3><p class="price-text">$${price.toFixed(2)}</p>`;
+  recipeIngredientsSection.innerHTML = `<h3>Recipe Cost</h3><p class="price-text">$${price.toFixed(
+    2
+  )}</p>`;
 }
 
 function generateRecipeIngredients(ingredients) {
   recipeIngredientsSection.innerHTML += '<h3>Ingredients</h3>';
-  ingredients.forEach(ingredient => recipeIngredientsSection.innerHTML += `<p>${ingredient.quantity.amount} ${ingredient.quantity.unit} ${ingredientsData.find(iteration => iteration.id === ingredient.id).name}</p>`);
+  ingredients.forEach(
+    (ingredient) =>
+      (recipeIngredientsSection.innerHTML += `<p>${
+        ingredient.quantity.amount
+      } ${ingredient.quantity.unit} ${
+        ingredientsData.find((iteration) => iteration.id === ingredient.id).name
+      }</p>`)
+  );
 }
 
 function generateRecipeInstructions(instructions) {
   recipeInstructionsSection.innerHTML = '';
-  instructions.forEach(instruction => recipeInstructionsSection.innerHTML += `<h3>Step ${instruction.number}</h3><p>${instruction.instruction}</p>`);
+  instructions.forEach(
+    (instruction) =>
+      (recipeInstructionsSection.innerHTML += `<h3>Step ${instruction.number}</h3><p>${instruction.instruction}</p>`)
+  );
 }
 
 function toggleSaveButton(event) {
@@ -239,7 +263,7 @@ function toggleSaveButton(event) {
   if (event.target.classList.contains('save-button')) {
     hide(saveBtn);
     show(savedBtn);
-		addRecipe(recipe, currentUser);
+    addRecipe(recipe, currentUser);
   } else {
     show(saveBtn);
     hide(savedBtn);
@@ -248,7 +272,11 @@ function toggleSaveButton(event) {
 }
 
 function closeRecipePage(event) {
-  if (event.target.classList.contains('x-button') || event.target.classList.contains('my-recipes') || event.target.classList.contains('home-view')) {
+  if (
+    event.target.classList.contains('x-button') ||
+    event.target.classList.contains('my-recipes') ||
+    event.target.classList.contains('home-view')
+  ) {
     header.style.backgroundImage = "url('images/whats-cooking-banner.jpg')";
     header.style.backgroundColor = '';
     header.style.height = '250px';
@@ -277,4 +305,12 @@ function hideNav() {
   document.getElementById('mainSidebar').style.width = '0';
 }
 
-export { returnListByTag, generateRecipes, returnSearchedRecipe, goHome, viewMyRecipes, showNav, hideNav };
+export {
+  returnListByTag,
+  generateRecipes,
+  returnSearchedRecipe,
+  goHome,
+  viewMyRecipes,
+  showNav,
+  hideNav,
+};
