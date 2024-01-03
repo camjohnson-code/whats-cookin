@@ -38,6 +38,8 @@ header {
   background-size: 100%;
   background-repeat: no-repeat;
   height: 250px;
+  position: sticky;
+  top: 0;
 }
 
 .x-button {
