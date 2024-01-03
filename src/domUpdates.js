@@ -66,7 +66,7 @@ allTags.forEach((tag) => {
   tag.addEventListener('click', returnListByTag);
 });
 
-searchInput.addEventListener('keypress', returnSearchedRecipe);
+searchInput.addEventListener('keyup', returnSearchedRecipe);
 
 window.addEventListener('load', function() {
   assignCurrentUser();
@@ -119,12 +119,12 @@ function returnSearchedRecipe(event) {
     const searchText = event.target.value;
 
     if (isUserRecipesView) {
-      const result = (getRecipeByName(currentUser.recipesToCook, searchText));
+      const result = getRecipeByName(currentUser.recipesToCook, searchText);
       if (result) {
         generateRecipes(result);
       }
     } else {
-      const result = (getRecipeByName(recipeData, searchText));
+      const result = getRecipeByName(recipeData, searchText);
       if (result) {
         generateRecipes(result);
       }
