@@ -6,7 +6,7 @@ import {
   getRecipeInstructions,
 } from './recipes.js';
 
-import { getUser, getIngredients, getRecipes} from './apiCalls.js';
+import {getApiInfo} from './apiCalls.js';
 import { addRecipe, removeRecipe} from './users.js';
 
 // Query Selectors
@@ -39,19 +39,19 @@ let recipeData;
 
 
 function assignCurrentUser() { 
-  getUser().then(user => {
+  getApiInfo('users').then(user => {
     currentUser = user;
   })
 }
 
 function assignIngredients() {
-  getIngredients().then(ingredients => {
+  getApiInfo('ingredients').then(ingredients => {
     ingredientsData = ingredients.ingredients;
   })
 }
 
 function assignRecipes() {
-  getRecipes().then(recipes => {
+  getApiInfo('recipes').then(recipes => {
     recipeData = recipes.recipes;
     generateRecipes(recipeData);
   })
