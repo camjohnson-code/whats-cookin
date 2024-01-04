@@ -115,23 +115,25 @@ function viewMyRecipes(userRecipes) {
   hideNav();
 }
 
-function returnSearchedRecipe(event) {
-  if (event.key === 'Enter') {
-    const searchText = event.target.value;
+searchInput.addEventListener('input', returnSearchedRecipe);
 
-    if (isUserRecipesView) {
-      const result = getRecipeByName(currentUser.recipesToCook, searchText);
-      if (result) {
-        generateRecipes(result);
-      }
-    } else {
-      const result = getRecipeByName(recipeData, searchText);
-      if (result) {
-        generateRecipes(result);
-      }
-    }
+function returnSearchedRecipe(event) {
+  const searchText = event.target.value.toLowerCase().trim();
+
+  let filteredRecipes;
+  if (isUserRecipesView) {
+    filteredRecipes = currentUser.recipesToCook.filter(recipe =>
+      recipe.name.toLowerCase().includes(searchText)
+    );
+  } else {
+    filteredRecipes = recipeData.filter(recipe =>
+      recipe.name.toLowerCase().includes(searchText)
+    );
   }
+
+  generateRecipes(filteredRecipes);
 }
+
 
 function returnListByTag(event) {
   const buttonID = event.target.id;
