@@ -67,7 +67,7 @@ allTags.forEach((tag) => {
   tag.addEventListener('click', returnListByTag);
 });
 
-searchInput.addEventListener('keypress', returnSearchedRecipe);
+searchInput.addEventListener('keyup', returnSearchedRecipe);
 
 window.addEventListener('load', function () {
   assignCurrentUser();
