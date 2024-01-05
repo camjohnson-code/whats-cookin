@@ -6,8 +6,8 @@ import {
   getRecipeInstructions,
 } from './recipes.js';
 
-import {getApiInfo} from './apiCalls.js';
-import { addRecipe, removeRecipe} from './users.js';
+import { getApiInfo, saveRecipe } from './apiCalls.js';
+import { removeRecipe } from './users.js';
 
 // Query Selectors
 const allTags = document.querySelectorAll('.tag-button');
@@ -39,20 +39,20 @@ let currentUser;
 let ingredientsData;
 let recipeData;
 
-function assignCurrentUser() { 
-  getApiInfo('users').then(user => {
+function assignCurrentUser() {
+  getApiInfo('users').then((user) => {
     currentUser = user;
   });
 }
 
 function assignIngredients() {
-  getApiInfo('ingredients').then(ingredients => {
+  getApiInfo('ingredients').then((ingredients) => {
     ingredientsData = ingredients.ingredients;
   });
 }
 
 function assignRecipes() {
-  getApiInfo('recipes').then(recipes => {
+  getApiInfo('recipes').then((recipes) => {
     recipeData = recipes.recipes;
     generateRecipes(recipeData);
   });
@@ -140,8 +140,10 @@ function returnListByTag(event) {
   listItems.forEach(function (li) {
     const tagButton = li.querySelector('button');
 
-    if (tagButton && tagButton.classList.contains('selected')) tagButton.classList.remove('selected');
-    if (tagButton && tagButton.id === buttonID) tagButton.classList.add('selected');
+    if (tagButton && tagButton.classList.contains('selected'))
+      tagButton.classList.remove('selected');
+    if (tagButton && tagButton.id === buttonID)
+      tagButton.classList.add('selected');
   });
 
   if (isUserRecipesView) {
@@ -260,11 +262,14 @@ function toggleSaveButton(event) {
       event.target.closest('div').querySelector('h1').textContent
   );
 
-  if (event.target.classList.contains('save-button')) {
+  if (
+    event.target.classList.contains('save-button') &&
+    savedBtn.classList.contains('hidden')
+  ) {
     hide(saveBtn);
     show(savedBtn);
-    addRecipe(recipe, currentUser);
-  } else {
+    saveRecipe(currentUser, recipe);
+  } else if (event.target.classList.contains('save-button-active')) {
     show(saveBtn);
     hide(savedBtn);
     removeRecipe(currentUser, recipe);
