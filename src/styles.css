@@ -257,7 +257,8 @@ header span {
   font-weight: 500;
 }
 
-.recipe-title button{
+.save-button,
+.add-to-list {
   border: none;
   font-family: 'Poppins', sans-serif;
   background-color: var(--lightGray);
@@ -267,8 +268,35 @@ header span {
   font-weight: 200;
 }
 
-.fa-bookmark {
-  padding-right: 5px;
+.save-button:active,
+.add-to-list:active,
+.save-button-active:active, 
+.add-to-list-active:active {
+  transform: translateY(1px);
+}
+
+.save-button-active, 
+.add-to-list-active {
+  background-color: var(--brown);
+  color: var(--white);
+}
+
+.save-button,
+.add-to-list,
+.save-button-active, 
+.add-to-list-active {
+  border: none;
+  font-family: 'Poppins', sans-serif;
+  width: 125px;
+  aspect-ratio: 4 / 1;
+  font-size: 13px;
+  font-weight: 200;
+}
+
+.fa-bookmark,
+.fa-list-ul {
+  padding-right: 3px;
+  margin: 0 10px;
 }
 
 .recipe-picture {
@@ -295,6 +323,13 @@ header span {
 .recipe-instructions{
   width: 65%;
   padding-right: 5vw;
+}
+
+.button-container {
+  width: 275px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
 .hidden {

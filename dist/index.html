@@ -34,6 +34,7 @@
       <i class="fa-regular fa-user" style="color: white; font-size: 24px;"></i>
     </a>
       <a href="#"><p class="my-recipes">My Recipes</p></a>
+      <a href="#"><p class="my-grocery-list">My Grocery List</p></a>
       <a href="#"><p class="home-view">Home</p>
       </a>
     </div>
@@ -56,8 +57,12 @@
 					<div class="recipe-title">
 						<h1 class="recipe-title-h1">The Best Meal that you'll ever have</h1>
 						<p class="tags"></p>
-            <button class="save-button"><i class="fa-regular fa-bookmark" style="color: #000000;"></i>Save Recipe</button>
-            <button class="save-button-active hidden"><i class="fa-solid fa-bookmark" style="color: #000000;"></i>Saved!</button>
+            <section class="button-container">
+              <button class="save-button"><i class="fa-regular fa-bookmark" style="color: #000000;"></i>Save Recipe</button>
+              <button class="save-button-active hidden"><i class="fa-regular fa-bookmark" style="color: #ffffff;"></i>Saved!</button>
+              <button class="add-to-list"><i class="fa-solid fa-list-ul"></i>Add to List</button>
+              <button class="add-to-list-active hidden"><i class="fa-solid fa-list-ul"></i>Added!</button>
+            </section>
 					</div>
 					<div class="recipe-picture">
 					</div>
@@ -71,6 +76,5 @@
 			</section>
     </main>
   </body>
-  <!-- Do not include the scripts.js file here - it is done automatically by the webpack server -->
   <script src="bundle.js"></script>
 </html>
