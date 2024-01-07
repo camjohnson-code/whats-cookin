@@ -7,7 +7,7 @@ import {
 } from './recipes.js';
 
 import { getApiInfo, saveRecipe } from './apiCalls.js';
-import { removeRecipe } from './users.js';
+import { addRecipe, removeRecipe } from './users.js';
 
 // Query Selectors
 const allTags = document.querySelectorAll('.tag-button');
@@ -34,10 +34,52 @@ const savedBtn = document.querySelector('.save-button-active');
 const sideBar = document.querySelector('.sidenav');
 const showNavBtn = document.querySelector('.show-button');
 const hideNavBtn = document.querySelector('.hide-button');
+
+const savePartyBtn = document.querySelector('.add-to-list');
+const savedPartyBtn = document.querySelector('.add-to-list-active');
 let isUserRecipesView = false;
 let currentUser;
 let ingredientsData;
 let recipeData;
+let partyRecipes = [];
+
+function addPartyRecipe(recipe) {
+  // console.log('ADDED RECIPE:', recipe)
+	partyRecipes.push(recipe);
+	// return partyRecipes;
+}
+
+function removePartyRecipe(targetRecipe) {
+	const index = partyRecipes.findIndex(recipe => recipe.id === targetRecipe.id);
+	partyRecipes.splice(index,1);
+}
+
+function toggleAddPartyBtn(event) {
+	const partyRecipe = recipeData.find(
+		(recipe) =>
+			recipe.name ===
+			event.target.closest('div').querySelector('h1').textContent
+	);
+  // console.log("Specific Party Recipe:" , partyRecipe);
+	// // const targetRecipe = addPartyRecipe(partyRecipe);
+	if (
+    event.target === 'button.add-to-list' ||
+    event.target.closest('button').classList.contains('add-to-list') &&
+    savedPartyBtn.classList.contains('hidden')
+  ) {
+    hide(savePartyBtn);
+    show(savedPartyBtn);
+    addPartyRecipe(partyRecipe);
+		// console.log("Current Party Recipe in toggle:" , partyRecipes[0].id);
+		// console.log("Testing for ID parity" , partyRecipes[0].id === partyRecipe.id);
+
+  } else if (event.target === 'button.add-to-list-active' || event.target.closest('button').classList.contains('add-to-list-active')) {
+    show(savePartyBtn);
+    hide(savedPartyBtn);
+    removePartyRecipe(partyRecipe);
+  }
+	// console.log("Party recipes", partyRecipes);
+}
 
 function assignCurrentUser() {
   getApiInfo('users').then((user) => {
@@ -81,6 +123,7 @@ header.addEventListener('click', function (event) {
 
 fullPageRecipe.addEventListener('click', function (event) {
   toggleSaveButton(event);
+  toggleAddPartyBtn(event);
 });
 
 allTags.forEach((tag) => {
@@ -133,7 +176,6 @@ function returnSearchedRecipe(event) {
 
   generateRecipes(filteredRecipes);
 }
-
 
 function returnListByTag(event) {
   const buttonID = event.target.id;
@@ -195,16 +237,27 @@ function displayRecipe(event) {
         recipe.name ===
         event.target.closest('div').querySelector('p').textContent
     );
-
+      // console.log('RECIPE ID:', recipe.id)
     const price = getIngredientPriceSum(recipe, ingredientsData) / 100;
 
-    if (
-      currentUser.recipesToCook.some(
-        (savedRecipe) => savedRecipe.id === recipe.id
-      )
-    ) {
+    if (currentUser.recipesToCook.some((savedRecipe) => savedRecipe.id === recipe.id)) {
+			// recipesToCook is an array
+			// console.log('inside savedRecipe loop');
       hide(saveBtn);
       show(savedBtn);
+    } else {
+      hide(savedBtn);
+      show(saveBtn);
+    }
+    
+    if (partyRecipes.some((partyRecipe) => partyRecipe.id === recipe.id)) {
+			//if this recipe exsists inside our array, show that it's is savedPartyBtn(ie, is saved)
+			// console.log('inside Party Recipe');
+      hide(savePartyBtn);
+			show(savedPartyBtn);    
+    } else {
+			hide(savedPartyBtn);
+			show(savePartyBtn);
     }
 
     generateRecipeTitle(recipe.name);
@@ -265,13 +318,15 @@ function toggleSaveButton(event) {
   );
 
   if (
-    event.target.classList.contains('save-button') &&
+    event.target === 'button.save-button' ||
+    event.target.closest('button').classList.contains('save-button') &&
     savedBtn.classList.contains('hidden')
   ) {
     hide(saveBtn);
     show(savedBtn);
     saveRecipe(currentUser, recipe);
-  } else if (event.target.classList.contains('save-button-active')) {
+  } else if (event.target === 'button.save-button-active' ||
+  event.target.closest('button').classList.contains('save-button-active')) {
     show(saveBtn);
     hide(savedBtn);
     removeRecipe(currentUser, recipe);
@@ -290,7 +345,7 @@ function closeRecipePage(event) {
     show(topNav);
     show(tagBar);
     show(displayedRecipesSection);
-    show(saveBtn);
+    // show(saveBtn); what does this do? @Cameron @ Jeremy
     hide(fullPageRecipe);
     hide(xBtn);
     hide(savedBtn);
