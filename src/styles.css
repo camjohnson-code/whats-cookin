@@ -332,6 +332,51 @@ header span {
   justify-content: space-between;
 }
 
+.party-recipes-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-content: center;
+}
+
+.party-ingredients-and-recipes{
+  display: flex;
+  justify-content: space-around;
+}
+
+.party-recipes-images{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+}
+
+.party-recipes-images div{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 200px;
+  aspect-ratio: 1 / 1;
+}
+
+.party-recipes-images div .recipe-image {
+  height: 150px;
+  width: 150px;
+  border-radius: 50%;
+}
+
+.party-total-price{
+  font-size: 30px;
+  display: flex;
+  justify-content: center;
+}
+
+.grocery-list{
+  display: flex;
+  font-size: 100px;
+  justify-content: center;
+}
+
 .hidden {
   display: none;
 }
@@ -344,3 +389,5 @@ header span {
     font-size: 18px;
   }
 }
+
+
