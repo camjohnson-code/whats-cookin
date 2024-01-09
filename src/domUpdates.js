@@ -4,45 +4,46 @@ import {
   getIngredientNames,
   getIngredientPriceSum,
   getRecipeInstructions,
-} from "./recipes.js";
+} from './recipes.js';
 
-import { getApiInfo, saveRecipe } from "./apiCalls.js";
-import { addRecipe, removeRecipe } from "./users.js";
+import { getApiInfo, saveRecipe } from './apiCalls.js';
+import { addRecipe, removeRecipe } from './users.js';
 
 // Query Selectors
-const allTags = document.querySelectorAll(".tag-button");
-const displayedRecipesSection = document.querySelector(".recipes-container");
-const tagBar = document.querySelector(".tagbar");
-const topNav = document.querySelector(".topnav");
-const header = document.querySelector("header");
-const fullPageRecipe = document.querySelector(".recipe");
-const recipeTitleSection = document.querySelector(".recipe-title");
-const recipeTitle = document.querySelector(".recipe-title-h1");
-const tagsParagraph = document.querySelector(".tags");
-const recipeImage = document.querySelector(".recipe-picture");
-const priceParagraph = document.querySelector(".price-text");
-const recipeIngredientsSection = document.querySelector(".recipe-ingredients");
+const allTags = document.querySelectorAll('.tag-button');
+const displayedRecipesSection = document.querySelector('.recipes-container');
+const tagBar = document.querySelector('.tagbar');
+const topNav = document.querySelector('.topnav');
+const header = document.querySelector('header');
+const fullPageRecipe = document.querySelector('.recipe');
+const recipeTitleSection = document.querySelector('.recipe-title');
+const recipeTitle = document.querySelector('.recipe-title-h1');
+const tagsParagraph = document.querySelector('.tags');
+const recipeImage = document.querySelector('.recipe-picture');
+const priceParagraph = document.querySelector('.price-text');
+const recipeIngredientsSection = document.querySelector('.recipe-ingredients');
 const recipeInstructionsSection = document.querySelector(
-  ".recipe-instructions"
+  '.recipe-instructions'
 );
-const xBtn = document.querySelector(".x-button");
-const searchInput = document.querySelector(".search-input");
-const myRecipesBtn = document.querySelector(".my-recipes");
-const homeView = document.querySelector(".home-view");
-const saveBtn = document.querySelector(".save-button");
-const savedBtn = document.querySelector(".save-button-active");
-const sideBar = document.querySelector(".sidenav");
-const showNavBtn = document.querySelector(".show-button");
-const hideNavBtn = document.querySelector(".hide-button");
-const groceryListBtn = document.querySelector(".my-grocery-list");
-const savePartyBtn = document.querySelector(".add-to-list");
-const savedPartyBtn = document.querySelector(".add-to-list-active");
+const xBtn = document.querySelector('.x-button');
+const searchInput = document.querySelector('.search-input');
+const myRecipesBtn = document.querySelector('.my-recipes');
+const homeView = document.querySelector('.home-view');
+const saveBtn = document.querySelector('.save-button');
+const savedBtn = document.querySelector('.save-button-active');
+const sideBar = document.querySelector('.sidenav');
+const showNavBtn = document.querySelector('.show-button');
+const hideNavBtn = document.querySelector('.hide-button');
+const groceryListBtn = document.querySelector('.my-grocery-list');
+const savePartyBtn = document.querySelector('.add-to-list');
+const savedPartyBtn = document.querySelector('.add-to-list-active');
 const displayedPartyRecipesSection = document.querySelector(
-  ".party-recipes-container"
+  '.party-recipes-container'
 );
-const partyRecipesImages = document.querySelector(".party-recipes-images");
-const partyIngredientsList = document.querySelector(".party-ingredients-list");
-const partyTotalPrice = document.querySelector(".party-total-price");
+const partyRecipesImages = document.querySelector('.party-recipes-images');
+const partyIngredientsList = document.querySelector('.party-ingredients-list');
+const partyTotalPrice = document.querySelector('.party-total-price');
+const userName = document.querySelector('.user-name');
 let isUserRecipesView = false;
 let currentUser;
 let ingredientsData;
@@ -66,20 +67,20 @@ function toggleAddPartyBtn(event) {
   const partyRecipe = recipeData.find(
     (recipe) =>
       recipe.name ===
-      event.target.closest("div").querySelector("h1").textContent
+      event.target.closest('div').querySelector('h1').textContent
   );
 
   if (
-    event.target === "button.add-to-list" ||
-    (event.target.closest("button").classList.contains("add-to-list") &&
-      savedPartyBtn.classList.contains("hidden"))
+    event.target === 'button.add-to-list' ||
+    (event.target.closest('button').classList.contains('add-to-list') &&
+      savedPartyBtn.classList.contains('hidden'))
   ) {
     hide(savePartyBtn);
     show(savedPartyBtn);
     addPartyRecipe(partyRecipe);
   } else if (
-    event.target === "button.add-to-list-active" ||
-    event.target.closest("button").classList.contains("add-to-list-active")
+    event.target === 'button.add-to-list-active' ||
+    event.target.closest('button').classList.contains('add-to-list-active')
   ) {
     show(savePartyBtn);
     hide(savedPartyBtn);
@@ -88,73 +89,74 @@ function toggleAddPartyBtn(event) {
 }
 
 function assignCurrentUser() {
-  getApiInfo("users").then((user) => {
+  getApiInfo('users').then((user) => {
     currentUser = user;
+    userName.innerText = `Hello, ${user.name.split(' ')[0]}`;
   });
 }
 
 function assignIngredients() {
-  getApiInfo("ingredients").then((ingredients) => {
+  getApiInfo('ingredients').then((ingredients) => {
     ingredientsData = ingredients.ingredients;
   });
 }
 
 function assignRecipes() {
-  getApiInfo("recipes").then((recipes) => {
+  getApiInfo('recipes').then((recipes) => {
     recipeData = recipes.recipes;
     generateRecipes(recipeData);
   });
 }
 
 // Event Listeners
-sideBar.addEventListener("click", function (event) {
+sideBar.addEventListener('click', function (event) {
   closeRecipePage(event);
 });
 
 allTags.forEach((tag) => {
-  tag.addEventListener("click", returnListByTag);
+  tag.addEventListener('click', returnListByTag);
 });
 
-searchInput.addEventListener("keyup", returnSearchedRecipe);
+searchInput.addEventListener('keyup', returnSearchedRecipe);
 
-window.addEventListener("load", function () {
+window.addEventListener('load', function () {
   assignCurrentUser();
   assignIngredients();
   assignRecipes();
 });
 
-header.addEventListener("click", function (event) {
+header.addEventListener('click', function (event) {
   closeRecipePage(event);
 });
 
-fullPageRecipe.addEventListener("click", function (event) {
+fullPageRecipe.addEventListener('click', function (event) {
   toggleSaveButton(event);
   toggleAddPartyBtn(event);
 });
 
 allTags.forEach((tag) => {
-  tag.addEventListener("click", returnListByTag);
+  tag.addEventListener('click', returnListByTag);
 });
 
-displayedRecipesSection.addEventListener("click", function (event) {
+displayedRecipesSection.addEventListener('click', function (event) {
   displayRecipe(event);
 });
 
-searchInput.addEventListener("keypress", returnSearchedRecipe);
+searchInput.addEventListener('keypress', returnSearchedRecipe);
 
-myRecipesBtn.addEventListener("click", viewMyRecipes);
+myRecipesBtn.addEventListener('click', viewMyRecipes);
 
-homeView.addEventListener("click", goHome);
+homeView.addEventListener('click', goHome);
 
-showNavBtn.addEventListener("click", showNav);
+showNavBtn.addEventListener('click', showNav);
 
-hideNavBtn.addEventListener("click", hideNav);
+hideNavBtn.addEventListener('click', hideNav);
 
-groceryListBtn.addEventListener("click", function (event) {
-    allIngredients = [];
-    totalPrice = 0;
-    makeGroceryList();
-    generatePartyRecipes(partyRecipes);
+groceryListBtn.addEventListener('click', function (event) {
+  allIngredients = [];
+  totalPrice = 0;
+  makeGroceryList();
+  generatePartyRecipes(partyRecipes);
 });
 
 // Functions
@@ -166,14 +168,14 @@ function goHome() {
 }
 
 function viewMyRecipes(userRecipes) {
-  displayedRecipesSection.innerHTML = "";
+  displayedRecipesSection.innerHTML = '';
   generateRecipes(currentUser.recipesToCook);
   isUserRecipesView = true;
   hideNav();
   hide(displayedPartyRecipesSection);
 }
 
-searchInput.addEventListener("input", returnSearchedRecipe);
+searchInput.addEventListener('input', returnSearchedRecipe);
 
 function returnSearchedRecipe(event) {
   const searchText = event.target.value.toLowerCase().trim();
@@ -194,19 +196,19 @@ function returnSearchedRecipe(event) {
 
 function returnListByTag(event) {
   const buttonID = event.target.id;
-  const listItems = document.querySelectorAll(".tagbar ul li");
+  const listItems = document.querySelectorAll('.tagbar ul li');
 
   listItems.forEach(function (li) {
-    const tagButton = li.querySelector("button");
+    const tagButton = li.querySelector('button');
 
-    if (tagButton && tagButton.classList.contains("selected"))
-      tagButton.classList.remove("selected");
+    if (tagButton && tagButton.classList.contains('selected'))
+      tagButton.classList.remove('selected');
     if (tagButton && tagButton.id === buttonID)
-      tagButton.classList.add("selected");
+      tagButton.classList.add('selected');
   });
 
   if (isUserRecipesView) {
-    if (buttonID === "all") {
+    if (buttonID === 'all') {
       const filteredRecipes = currentUser.recipesToCook;
       generateRecipes(filteredRecipes);
     } else {
@@ -214,7 +216,7 @@ function returnListByTag(event) {
       generateRecipes(filteredRecipes);
     }
   } else {
-    if (buttonID === "all") {
+    if (buttonID === 'all') {
       const filteredRecipes = recipeData;
       generateRecipes(filteredRecipes);
     } else {
@@ -226,7 +228,7 @@ function returnListByTag(event) {
 
 function generateRecipes(recipes) {
   hide(displayedPartyRecipesSection);
-  displayedRecipesSection.innerHTML = "";
+  displayedRecipesSection.innerHTML = '';
   recipes.forEach((recipe) => {
     displayedRecipesSection.innerHTML += `
     <div class="recipe-item">
@@ -241,13 +243,13 @@ function generatePartyRecipes(partyRecipes) {
   hide(displayedRecipesSection);
   show(displayedPartyRecipesSection);
 
-  header.style.backgroundImage = "none";
-  header.style.backgroundColor = "#e7e5e6";
-  header.style.height = "70px";
+  header.style.backgroundImage = 'none';
+  header.style.backgroundColor = '#e7e5e6';
+  header.style.height = '70px';
 
-  partyIngredientsList.innerHTML = ''; 
-  partyRecipesImages.innerHTML = ''; 
-  partyTotalPrice.innerHTML = ''; 
+  partyIngredientsList.innerHTML = '';
+  partyRecipesImages.innerHTML = '';
+  partyTotalPrice.innerHTML = '';
 
   hide(topNav);
   hide(tagBar);
@@ -265,10 +267,9 @@ function generatePartyRecipes(partyRecipes) {
   });
 
   partyRecipes.forEach((recipe) => {
-    const partyRecipesImagesContainer = document.createElement("div");
+    const partyRecipesImagesContainer = document.createElement('div');
 
-    partyRecipesImagesContainer.classList.add("recipe-item");
-    
+    partyRecipesImagesContainer.classList.add('recipe-item');
 
     partyRecipesImagesContainer.innerHTML = `
       <img class="recipe-image" src="${recipe.image}" alt="Recipe Photo">
@@ -283,10 +284,10 @@ function generatePartyRecipes(partyRecipes) {
 }
 
 function displayRecipe(event) {
-  if (event.target.closest("div").classList.contains("recipe-item")) {
-    header.style.backgroundImage = "none";
-    header.style.backgroundColor = "#e7e5e6";
-    header.style.height = "70px";
+  if (event.target.closest('div').classList.contains('recipe-item')) {
+    header.style.backgroundImage = 'none';
+    header.style.backgroundColor = '#e7e5e6';
+    header.style.height = '70px';
     show(xBtn);
     show(fullPageRecipe);
     hide(topNav);
@@ -297,7 +298,7 @@ function displayRecipe(event) {
     const recipe = recipeData.find(
       (recipe) =>
         recipe.name ===
-        event.target.closest("div").querySelector("p").textContent
+        event.target.closest('div').querySelector('p').textContent
     );
 
     const price = getIngredientPriceSum(recipe, ingredientsData) / 100;
@@ -337,7 +338,7 @@ function generateRecipeTitle(title) {
 
 function generateRecipeTags(tags) {
   tagsParagraph.innerHTML = `<span class="orange-text">Tags:</span> ${tags.join(
-    ", "
+    ', '
   )}`;
 }
 
@@ -346,14 +347,14 @@ function generateRecipeImage(image) {
 }
 
 function generateRecipePrice(price) {
-  recipeIngredientsSection.innerHTML = "";
+  recipeIngredientsSection.innerHTML = '';
   recipeIngredientsSection.innerHTML = `<h3>Recipe Cost</h3><p class="price-text">$${price.toFixed(
     2
   )}</p>`;
 }
 
 function generateRecipeIngredients(ingredients) {
-  recipeIngredientsSection.innerHTML += "<h3>Ingredients</h3>";
+  recipeIngredientsSection.innerHTML += '<h3>Ingredients</h3>';
   ingredients.forEach(
     (ingredient) =>
       (recipeIngredientsSection.innerHTML += `<p>${
@@ -365,7 +366,7 @@ function generateRecipeIngredients(ingredients) {
 }
 
 function generateRecipeInstructions(instructions) {
-  recipeInstructionsSection.innerHTML = "";
+  recipeInstructionsSection.innerHTML = '';
   instructions.forEach(
     (instruction) =>
       (recipeInstructionsSection.innerHTML += `<h3>Step ${instruction.number}</h3><p>${instruction.instruction}</p>`)
@@ -401,20 +402,20 @@ function toggleSaveButton(event) {
   const recipe = recipeData.find(
     (recipe) =>
       recipe.name ===
-      event.target.closest("div").querySelector("h1").textContent
+      event.target.closest('div').querySelector('h1').textContent
   );
 
   if (
-    event.target === "button.save-button" ||
-    (event.target.closest("button").classList.contains("save-button") &&
-      savedBtn.classList.contains("hidden"))
+    event.target === 'button.save-button' ||
+    (event.target.closest('button').classList.contains('save-button') &&
+      savedBtn.classList.contains('hidden'))
   ) {
     hide(saveBtn);
     show(savedBtn);
     saveRecipe(currentUser, recipe);
   } else if (
-    event.target === "button.save-button-active" ||
-    event.target.closest("button").classList.contains("save-button-active")
+    event.target === 'button.save-button-active' ||
+    event.target.closest('button').classList.contains('save-button-active')
   ) {
     show(saveBtn);
     hide(savedBtn);
@@ -424,13 +425,13 @@ function toggleSaveButton(event) {
 
 function closeRecipePage(event) {
   if (
-    event.target.classList.contains("x-button") ||
-    event.target.classList.contains("my-recipes") ||
-    event.target.classList.contains("home-view")
+    event.target.classList.contains('x-button') ||
+    event.target.classList.contains('my-recipes') ||
+    event.target.classList.contains('home-view')
   ) {
     header.style.backgroundImage = "url('images/whats-cooking-banner.jpg')";
-    header.style.backgroundColor = "";
-    header.style.height = "250px";
+    header.style.backgroundColor = '';
+    header.style.height = '250px';
     show(topNav);
     show(tagBar);
     show(displayedRecipesSection);
@@ -442,18 +443,18 @@ function closeRecipePage(event) {
 }
 
 function hide(element) {
-  element.classList.add("hidden");
+  element.classList.add('hidden');
 }
 
 function show(element) {
-  element.classList.remove("hidden");
+  element.classList.remove('hidden');
 }
 
 function showNav() {
-  document.getElementById("mainSidebar").style.width = "250px";
+  document.getElementById('mainSidebar').style.width = '250px';
 }
 function hideNav() {
-  document.getElementById("mainSidebar").style.width = "0";
+  document.getElementById('mainSidebar').style.width = '0';
 }
 
 export {

@@ -5,13 +5,11 @@ function getApiInfo(type) {
   apiURL += type;
   let apiResponse;
   if (type === 'users') {
-    apiResponse = fetch(apiURL).then((response) =>
+    return fetch(apiURL).then((response) =>
       response.json().then((data) => randomizeUser(data.users))
     );
-    return apiResponse;
   } else {
-    apiResponse = fetch(apiURL).then((response) => response.json().then());
-    return apiResponse;
+    return fetch(apiURL).then((response) => response.json());
   }
 }
 
